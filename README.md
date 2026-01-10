@@ -1,5 +1,5 @@
 ### 画面遷移図
-Figma：
+Figma：https://www.figma.com/design/Gv0ByVhuzkE7Yv6084VzWk/%E7%84%A1%E9%A1%8C?node-id=0-1&t=BPLzUUFnyztTZFCH-1
 
 ### 本サービスの概要
 ## サービス概要
