@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # これが current_user メソッドなどを提供します
+  include Authentication
+  
+  # 以前の Rails と異なり、Rails 8 では include だけで動作します
 end

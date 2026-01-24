@@ -1,0 +1,27 @@
+<%= form_with(model: word) do |form| %>
+  <% if word.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(word.errors.count, "error") %> prohibited this word from being saved:</h2>
+
+      <ul>
+        <% word.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :original_text, style: "display: block" %>
+    <%= form.text_field :original_text %>
+  </div>
+
+  <div>
+    <%= form.label :meaning, style: "display: block" %>
+    <%= form.textarea :meaning %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
