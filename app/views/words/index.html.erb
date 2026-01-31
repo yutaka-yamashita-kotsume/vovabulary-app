@@ -1,16 +1,47 @@
-<p style="color: green"><%= notice %></p>
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+    <div>
+      <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">My Vocabulary</h1>
+      <p class="text-slate-500 mt-1">これまでに覚えた単語のコレクション</p>
+    </div>
+    <%= link_to new_word_path, class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all transform hover:-translate-y-1" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Add New Word
+    <% end %>
+  </div>
 
-<% content_for :title, "Words" %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <% @words.each do |word| %>
+      <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 flex flex-col h-full">
+        <div class="flex-grow">
+          <div class="flex items-start justify-between mb-3">
+            <h2 class="text-2xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
+              <%= word.original_text %>
+            </h2>
+          </div>
+          <p class="text-slate-600 text-lg leading-relaxed mb-6">
+            <%= word.meaning.presence || "（意味がまだ登録されていません）" %>
+          </p>
+        </div>
 
-<h1>Words</h1>
+        <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+          <div class="flex space-x-4">
+            <%= link_to "Show", word, class: "text-sm font-semibold text-indigo-500 hover:text-indigo-700" %>
+            <%= link_to "Edit", edit_word_path(word), class: "text-sm font-semibold text-slate-400 hover:text-slate-600" %>
+          </div>
+          <span class="text-xs text-slate-400">
+            <%= word.created_at.strftime("%Y/%m/%d") %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-<div id="words">
-  <% @words.each do |word| %>
-    <%= render word %>
-    <p>
-      <%= link_to "Show this word", word %>
-    </p>
+  <% if @words.empty? %>
+    <div class="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
+      <p class="text-slate-400 text-lg">まだ単語がありません。最初の単語を登録しましょう！</p>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New word", new_word_path %>

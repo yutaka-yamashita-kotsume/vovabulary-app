@@ -23,7 +23,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+  <main class="container mx-auto mt-10">
     <%= yield %>
+  </main>
   </body>
 </html>
