@@ -1,9 +1,8 @@
-<%= form_with(model: word) do |form| %>
+<%= form_with(model: word, class: "space-y-6") do |form| %>
   <% if word.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(word.errors.count, "error") %> prohibited this word from being saved:</h2>
-
-      <ul>
+    <div class="bg-red-50 text-red-700 p-4 rounded-lg border border-red-200 animate-pulse">
+      <h2 class="font-bold text-sm mb-1"><%= pluralize(word.errors.count, "error") %> prohibited this word from being saved:</h2>
+      <ul class="list-disc list-inside text-sm">
         <% word.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -12,16 +11,20 @@
   <% end %>
 
   <div>
-    <%= form.label :original_text, style: "display: block" %>
-    <%= form.text_field :original_text %>
-  </div>
+  <%= form.label :original_text, "English Word", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+  <%= form.text_field :original_text, class: "..." %>
+</div>
 
   <div>
-    <%= form.label :meaning, style: "display: block" %>
-    <%= form.textarea :meaning %>
+    <%= form.label :meaning, "Meaning (Optional)", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+    <%= form.text_area :meaning, 
+        rows: 4, 
+        class: "w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all placeholder-gray-400", 
+        placeholder: "意味を記入してください。空欄の場合は後でAIが自動生成できます。" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="pt-2">
+    <%= form.submit "Register Word", 
+        class: "w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer" %>
   </div>
 <% end %>
