@@ -59,12 +59,16 @@ class WordsController < ApplicationController
     @word.destroy!
 
     respond_to do |format|
-      format.html { redirect_to words_path, notice: "Word was successfully destroyed.", status: :see_other }
+      format.html { redirect_to words_url, notice: "Word was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
 
   private
+  def set_word
+    @word = Word.find(params[:id])
+  end
+
    def fetch_ai_meaning(text)
   api_key = "6906a107-fe48-4ec0-b9f4-6589dd22aab1:fx"
   uri = URI.parse("https://api-free.deepl.com/v2/translate")
@@ -93,8 +97,8 @@ rescue => e
   "例外エラー: #{e.message}"
 end
 
-    # Only allow a list of trusted parameters through.
-    def word_params
+  def word_params
       params.expect(word: [ :original_text, :meaning ])
-    end
   end
+
+end
