@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root "words#index"
+  get "quiz", to: "quiz#index"
+  get "quiz/reset", to: "quiz#reset"
   resource :session
   resources :passwords, param: :token
   resources :words
@@ -8,10 +11,4 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   get "articles/:category_slug/:article_slug", to: "articles#show", as: :article
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end
