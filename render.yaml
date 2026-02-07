@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: yutaka-vocabulary-app
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: yutaka-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: NODE_VERSION
+        value: 20.0.0 # Node.jsを使う場合
+
+databases:
+  - name: yutaka-db
+    plan: free # 無料プラン
