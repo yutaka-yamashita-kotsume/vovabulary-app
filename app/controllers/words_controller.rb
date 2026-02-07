@@ -10,6 +10,11 @@ class WordsController < ApplicationController
     @words = Word.all
   end
 
+  def home
+    # トップ画面（Dashboard）用のアクション（新設）
+    # ここでは特にデータを使わないので空でもOK
+  end
+
   # GET /words/1 or /words/1.json
   def show
   end

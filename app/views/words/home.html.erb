@@ -1,0 +1,31 @@
+<div class="max-w-4xl mx-auto mb-10">
+  <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+    
+    <div class="text-center md:text-left">
+      <h2 class="text-2xl font-bold text-slate-800">My Vocabulary</h2>
+    </div>
+
+  <div class="max-w-md mx-auto mb-12 px-4" style="margin-top: 2rem;">
+  <div class="flex gap-4 p-2 bg-gray-100 rounded-3xl" style="background-color: #f1f5f9; display: flex; gap: 1rem; padding: 0.5rem; border-radius: 1.5rem;">
+    
+    <%# クイズボタン %>
+    <%= link_to quiz_path, class: "flex-1 text-center bg-white rounded-2xl shadow-sm border border-gray-200 transition-all active:scale-95", style: "flex: 1; text-align: center; background-color: white; padding: 1.5rem 0.5rem; border-radius: 1rem; border: 1px solid #e2e8f0; text-decoration: none; position: relative;" do %>
+      <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🎯</div>
+      <div style="font-size: 0.875rem; font-weight: 800; color: #334155;">Quiz</div>
+      <div style="position: absolute; top: -8px; right: -4px; background-color: #f59e0b; color: white; font-size: 10px; padding: 2px 8px; border-radius: 9999px; font-weight: bold;">STUDY</div>
+    <% end %>
+
+    <%# 2. 単語一覧（追加） %>
+    <%= link_to words_path, style: "flex: 1; text-align: center; background-color: white; padding: 1.25rem 0.25rem; border-radius: 1rem; border: 1px solid #e2e8f0; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" do %>
+      <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">📖</div>
+      <div style="font-size: 0.75rem; font-weight: 800; color: #334155;">List</div>
+    <% end %>
+
+    <%# 追加ボタン %>
+    <%= link_to new_word_path, class: "flex-1 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300 transition-all active:scale-95", style: "flex: 1; text-align: center; background-color: #f8fafc; padding: 1.5rem 0.5rem; border-radius: 1rem; border: 1px dashed #cbd5e1; text-decoration: none;" do %>
+      <div style="font-size: 1.5rem; margin-bottom: 0.25rem; color: #94a3b8;">+</div>
+      <div style="font-size: 0.875rem; font-weight: 800; color: #64748b;">Add Word</div>
+    <% end %>
+
+  </div>
+</div>

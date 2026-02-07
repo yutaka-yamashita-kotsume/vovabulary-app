@@ -1,3 +1,12 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <%# ヘッダーエリア：タイトルと戻るボタン %>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-2xl font-bold text-slate-800">My Word List</h1>
+    <%= link_to root_path, class: "px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-all" do %>
+      ← Home
+    <% end %>
+  </div>
+
 <div class="max-w-6xl mx-auto px-4 py-12">
   <% if notice %>
     <div style="background-color: #dcfce7; color: #166534; border: 1px solid #b9f6ca; padding: 16px; border-radius: 12px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: 600;">
@@ -5,28 +14,9 @@
         <span><%= notice %></span>
       </div>
       <button onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; color: #166534; font-size: 18px; font-weight: bold; padding: 0 5px;">
-        ✕
       </button>
     </div>
   <% end %>
-
-  <%# --- 以下、My Vocabularyのヘッダー --- %>
-
-  <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
-    <div>
-      <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">My Vocabulary</h1>
-      <p class="text-slate-500 mt-1">これまでに覚えた単語のコレクション</p>
-    </div>
-    <%= link_to new_word_path, class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all transform hover:-translate-y-1" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Add New Word
-    <% end %>
-    <%= link_to quiz_path, class: "inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-lg shadow-amber-200 transition-all" do %>
-  🎯 Start Quiz
-<% end %>
-  </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     <% @words.each do |word| %>

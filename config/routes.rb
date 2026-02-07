@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "words#index"
+  root "words#home"
+  
   get "quiz", to: "quiz#index"
   get "quiz/reset", to: "quiz#reset"
   post "quiz/record_answer", to: "quiz#record_answer"
