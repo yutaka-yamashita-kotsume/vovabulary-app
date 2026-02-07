@@ -7,7 +7,7 @@ class WordsController < ApplicationController
 
   # GET /words or /words.json
   def index
-    @words = Word.all
+    @words = Current.user.words
   end
 
   def home
@@ -21,7 +21,7 @@ class WordsController < ApplicationController
 
   # GET /words/new
   def new
-    @word = Word.new
+    @word = Current.user.words.new
   end
 
   # GET /words/1/edit
@@ -30,9 +30,7 @@ class WordsController < ApplicationController
 
   # POST /words or /words.json
   def create
-    @word = Word.new(word_params)
-    # とりあえず「一番最初のユーザー」をこの単語の持ち主にする
-    @word.user = User.first
+    @word = Current.user.words.new(word_params)
 
     # 意味(meaning)が空で、単語(original_text)が入っている場合のみAIに聞く
     if @word.original_text.present? && (@word.meaning.blank? || @word.meaning == "")
@@ -61,6 +59,7 @@ class WordsController < ApplicationController
 
   # DELETE /words/1 or /words/1.json
   def destroy
+    @word = Current.user.words.find(params[:id])
     @word.destroy!
 
     respond_to do |format|
