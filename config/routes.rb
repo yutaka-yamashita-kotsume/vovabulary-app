@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+  get "registrations/new"
+  get "registrations/create"
   root "words#home"
-  
+
   get "quiz", to: "quiz#index"
   get "quiz/reset", to: "quiz#reset"
   post "quiz/record_answer", to: "quiz#record_answer"
   resource :session
   resources :passwords, param: :token
+  resources :registrations, only: [:new, :create]
   resources :words
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
