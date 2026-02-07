@@ -44,6 +44,18 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
     </svg>
   </button>
+  <%# 各単語のカード内、original_textの横あたりに追加 %>
+<div class="flex items-center gap-2">
+  <span class="text-2xl font-bold text-slate-800">
+  <div class="flex">
+    <% word.consecutive_correct_count.times do %>
+      <span class="text-orange-500 text-sm">🔥</span>
+    <% end %>
+    <% (3 - word.consecutive_correct_count).times do %>
+      <span class="text-slate-200 text-sm">○</span>
+    <% end %>
+  </div>
+</div>
 </h2>
           </div>
           <p class="text-slate-600 text-lg leading-relaxed mb-6">

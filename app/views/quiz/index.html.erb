@@ -13,6 +13,15 @@
     <h2 id="question-text" class="text-5xl font-extrabold text-slate-800 mb-10">
       <%= @correct_word.original_text %>
     </h2>
+<div class="flex justify-center gap-1 mb-6">
+  <span class="text-xs text-slate-400 mr-2">Current Status:</span>
+  <% @correct_word.consecutive_correct_count.times do %>
+    <span class="text-xl">🔥</span>
+  <% end %>
+  <% (3 - @correct_word.consecutive_correct_count).times do %>
+    <span class="text-xl text-slate-200">○</span>
+  <% end %>
+</div>
 
     <div class="grid grid-cols-1 gap-4">
       <% @choices.each do |choice| %>
@@ -67,5 +76,37 @@
     setTimeout(() => {
       window.location.href = "<%= quiz_path %>";
     }, 1000);
+  }
+
+  async function checkAnswer(button, isCorrect) {
+    const buttons = document.querySelectorAll('.choice-btn');
+    buttons.forEach(btn => btn.disabled = true);
+
+    // ★サーバーに結果を送信
+    await fetch("/quiz/record_answer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({
+        word_id: "<%= @correct_word.id %>",
+        correct: isCorrect
+      })
+    });
+
+    if (isCorrect === "true") {
+      button.style.backgroundColor = "#22c55e";
+      button.style.color = "white";
+      button.innerHTML += " ✨ Correct!";
+    } else {
+      button.style.backgroundColor = "#ef4444";
+      button.style.color = "white";
+      button.innerHTML += " ❌ Wrong...";
+    }
+    
+    setTimeout(() => {
+      Turbo.visit("<%= quiz_path %>", { action: "replace" });
+    }, 1200);
   }
 </script>
