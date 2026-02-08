@@ -87,7 +87,7 @@
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({
-          word_id: "<%= @correct_word.id %>",
+          id: "<%= @correct_word.id %>",
           correct: isCorrect
         })
       });

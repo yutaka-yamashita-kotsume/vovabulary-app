@@ -55,14 +55,15 @@ class QuizController < ApplicationController
   end
 
   def record_answer
+    # params[:id] が JS の JSON 内の id と一致します
     word = Current.user.words.find(params[:id])
-    correct = params[:correct] == "true"
+    
+    # 判定を確実に
+    correct = (params[:correct] == "true" || params[:correct] == true)
 
     if correct
       word.increment!(:consecutive_correct_count)
-      # --- 正解数をセッションに加算 ---
-      session[:quiz_correct_count] ||= 0
-      session[:quiz_correct_count] += 1
+      session[:quiz_correct_count] = (session[:quiz_correct_count] || 0) + 1
     else
       word.update(consecutive_correct_count: 0)
     end
