@@ -37,65 +37,50 @@
 </div>
 
 <script>
-  // ① 音声読み上げ関数
+  // 音声読み上げ関数
   function speak(text) {
+    if (!text) return;
     window.speechSynthesis.cancel();
-    const uttr = new SpeechSynthesisUtterance();
-    uttr.text = text;
+    const uttr = new SpeechSynthesisUtterance(text);
     uttr.lang = 'en-US';
     uttr.rate = 0.9;
     window.speechSynthesis.speak(uttr);
   }
 
-  // ページが読み込まれたら自動的に音声を再生
+  // ページ読み込み時の自動再生
+  // Turbo環境では turbo:load を使います
   document.addEventListener("turbo:load", function() {
     const questionText = document.getElementById("question-text");
     if (questionText) {
-      // 画面表示から少しだけ遅らせて再生（ブラウザの自動再生ブロック対策）
-      setTimeout(() => {
-        speak(questionText.innerText.trim());
-      }, 500);
+      setTimeout(() => speak(questionText.innerText.trim()), 500);
     }
   }, { once: true });
 
-  // ② 回答チェックと自動遷移
-  function checkAnswer(button, isCorrect) {
+  // 回答チェック関数（1つにまとめました）
+  async function checkAnswer(button, isCorrectStr) {
+    const isCorrect = isCorrectStr === "true";
     const buttons = document.querySelectorAll('.choice-btn');
     buttons.forEach(btn => btn.disabled = true);
 
-    if (isCorrect === "true") {
-      button.classList.add('bg-green-500', 'text-white', 'border-green-500');
-      button.innerHTML += " ✨ Correct!";
-    } else {
-      button.classList.add('bg-red-500', 'text-white', 'border-red-500');
-      button.innerHTML += " ❌ Wrong...";
-      // 不正解のときは正解のボタンもハイライトすると親切です
+    // サーバーに結果を送信
+    try {
+      await fetch("/quiz/record_answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          word_id: "<%= @correct_word.id %>",
+          correct: isCorrect
+        })
+      });
+    } catch (e) {
+      console.error("記録に失敗しました", e);
     }
-    
-    // 1.5秒後に自動で次の問題へ
-    setTimeout(() => {
-      window.location.href = "<%= quiz_path %>";
-    }, 1000);
-  }
 
-  async function checkAnswer(button, isCorrect) {
-    const buttons = document.querySelectorAll('.choice-btn');
-    buttons.forEach(btn => btn.disabled = true);
-
-    // ★サーバーに結果を送信
-    await fetch("/quiz/record_answer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
-      },
-      body: JSON.stringify({
-        word_id: "<%= @correct_word.id %>",
-        correct: isCorrect
-      })
-    });
-
-    if (isCorrect === "true") {
+    // 見た目のフィードバック
+    if (isCorrect) {
       button.style.backgroundColor = "#22c55e";
       button.style.color = "white";
       button.innerHTML += " ✨ Correct!";
@@ -105,8 +90,14 @@
       button.innerHTML += " ❌ Wrong...";
     }
     
+    // 次の問題へ遷移
     setTimeout(() => {
-      Turbo.visit("<%= quiz_path %>", { action: "replace" });
+      // Turboが使えない場合を考慮して、確実な方法で遷移
+      if (typeof Turbo !== 'undefined') {
+        Turbo.visit("<%= quiz_path %>", { action: "replace" });
+      } else {
+        window.location.href = "<%= quiz_path %>";
+      }
     }, 1200);
   }
 </script>
