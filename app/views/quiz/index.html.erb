@@ -64,20 +64,15 @@
 
     // サーバーに結果を送信
     try {
-      await fetch("/quiz/record_answer", {
+      const response = await fetch("/quiz/record_answer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json", // これを追加
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
         },
-        body: JSON.stringify({
-          word_id: "<%= @correct_word.id %>",
-          correct: isCorrect
-        })
+        body: JSON.stringify(payload)
       });
-    } catch (e) {
-      console.error("記録に失敗しました", e);
-    }
 
     // 見た目のフィードバック
     if (isCorrect) {
