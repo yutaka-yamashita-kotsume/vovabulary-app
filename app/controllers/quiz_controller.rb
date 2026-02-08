@@ -28,7 +28,7 @@ class QuizController < ApplicationController
       @mastered_count = Current.user.words.where("consecutive_correct_count >= ?", 3).count
       @learning_count = Current.user.words.where("consecutive_correct_count < ?", 3).count
       
-      ssession[:quiz_current_index] = nil
+      session[:quiz_current_index] = nil
       session[:quiz_tested_ids] = nil
       session[:quiz_correct_count] = nil
 
