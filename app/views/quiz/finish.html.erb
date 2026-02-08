@@ -1,19 +1,35 @@
 <div class="max-w-2xl mx-auto px-4 py-12 text-center">
-  <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-100 mb-8">
-    <div class="text-6xl mb-6">🎓</div>
-    <h1 class="text-3xl font-bold text-slate-900 mb-4">テスト完了！</h1>
-    <p class="text-slate-500 mb-8">
-      3回連続正解した単語は「卒業」となり、<br>次回のテストから出題されなくなります。
-    </p>
-    
-    <%# 現在の全単語のマスター率を表示しても面白いです %>
-    <% master_count = Word.where("consecutive_correct_count >= 3").count %>
-    <% total_count = Word.count %>
-    <div class="mb-10 p-4 bg-indigo-50 rounded-2xl">
-      <p class="text-indigo-600 font-bold">マスターした単語: <%= master_count %> / <%= total_count %></p>
+  <% if @all_mastered %>
+    <%# 全単語学習済みの場合 %>
+    <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-100 mb-8">
+      <div class="text-6xl mb-6">🎉</div>
+      <h2 class="text-3xl font-extrabold text-slate-800 mb-4">素晴らしい！</h2>
+      <p class="text-slate-600 mb-8">全ての単語をマスターしましたね！<br>新しい単語を追加して、さらに語彙力を高めましょう。</p>
+      <%= link_to "ホームに戻る", root_path, class: "inline-block bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all" %>
     </div>
 
-    <%= link_to "もう一度テストする", quiz_reset_path, class: "block w-full py-4 bg-indigo-600 text-white font-bold rounded-2xl mb-4 hover:bg-indigo-700 transition-all shadow-lg" %>
-    <%= link_to "一覧に戻る", root_path, class: "block w-full py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200" %>
-  </div>
+  <% else %>
+    <%# 通常のテスト完了画面 %>
+    <div class="text-6xl mb-6">🙌</div>
+    <h2 class="text-3xl font-extrabold text-slate-800 mb-8">Test Complete!</h2>
+
+    <% if @mastered_words.any? %>
+      <div class="mb-10 text-left">
+        <p class="text-sm text-slate-400 font-bold mb-4 uppercase tracking-widest">マスターした単語（正解数3回以上）</p>
+        <div class="grid grid-cols-1 gap-3">
+          <% @mastered_words.each do |word| %>
+            <div class="flex items-center justify-between p-4 bg-green-50 rounded-2xl border border-green-100">
+              <span class="font-bold text-green-700"><%= word.original_text %></span>
+              <span class="text-xs font-bold text-green-600 bg-white px-2 py-1 rounded-full shadow-sm">MASTERED ✨</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flex flex-col gap-4">
+      <%= link_to "もう一度テストする", quiz_path, class: "bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all" %>
+      <%= link_to "ホームに戻る", root_path, class: "text-slate-400 hover:text-slate-600 font-semibold" %>
+    </div>
+  <% end %>
 </div>
