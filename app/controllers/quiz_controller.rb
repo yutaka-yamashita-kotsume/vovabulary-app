@@ -23,12 +23,15 @@ class QuizController < ApplicationController
 
     # テスト終了時の処理
     if @current_index > @total_questions
-      # 現在のユーザーの単語を件数で取得
+      # 1. 表示用のデータを変数に格納する
+      @correct_answers = session[:quiz_correct_count] || 0
       @mastered_count = Current.user.words.where("consecutive_correct_count >= ?", 3).count
       @learning_count = Current.user.words.where("consecutive_correct_count < ?", 3).count
       
-      session[:quiz_current_index] = nil
+      ssession[:quiz_current_index] = nil
       session[:quiz_tested_ids] = nil
+      session[:quiz_correct_count] = nil
+
       render :finish and return
     end
 
@@ -70,6 +73,7 @@ class QuizController < ApplicationController
   def reset
     session[:quiz_current_index] = nil
     session[:quiz_tested_ids] = nil
+    session[:quiz_correct_count] = nil
     redirect_to quiz_path
   end
 end
