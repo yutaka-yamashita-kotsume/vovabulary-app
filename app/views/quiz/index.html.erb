@@ -37,29 +37,32 @@
 </div>
 
 <script>
-  // 音声読み上げ関数
+  // ① 音声読み上げ（より安定した書き方）
   function speak(text) {
     if (!text) return;
-    window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel(); // 前の音声を止める
     const uttr = new SpeechSynthesisUtterance(text);
     uttr.lang = 'en-US';
     uttr.rate = 0.9;
     window.speechSynthesis.speak(uttr);
   }
 
-  // ページ読み込み時の自動再生
-  // Turbo環境では turbo:load を使います
+  // ページ読み込み時に実行
   document.addEventListener("turbo:load", function() {
     const questionText = document.getElementById("question-text");
     if (questionText) {
-      setTimeout(() => speak(questionText.innerText.trim()), 500);
+      setTimeout(() => {
+        speak(questionText.innerText.trim());
+      }, 600);
     }
-  }, { once: true });
+  });
 
-  // 回答チェック関数（1つにまとめました）
+  // ② 回答チェック関数（文法エラーを修正済）
   async function checkAnswer(button, isCorrectStr) {
-    const isCorrect = isCorrectStr === "true";
+    const isCorrect = (isCorrectStr === "true");
     const buttons = document.querySelectorAll('.choice-btn');
+    
+    // 全ボタンを無効化
     buttons.forEach(btn => btn.disabled = true);
 
     // サーバーに結果を送信
@@ -68,11 +71,18 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json", // これを追加
+          "Accept": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          word_id: "<%= @correct_word.id %>",
+          correct: isCorrect
+        })
       });
+      console.log("Record status:", response.status);
+    } catch (e) {
+      console.error("Fetch error:", e);
+    } // ← ここで try をしっかり閉じました
 
     // 見た目のフィードバック
     if (isCorrect) {
@@ -85,14 +95,10 @@
       button.innerHTML += " ❌ Wrong...";
     }
     
-    // 次の問題へ遷移
+    // 1.2秒後に次の問題へ
     setTimeout(() => {
-      // Turboが使えない場合を考慮して、確実な方法で遷移
-      if (typeof Turbo !== 'undefined') {
-        Turbo.visit("<%= quiz_path %>", { action: "replace" });
-      } else {
-        window.location.href = "<%= quiz_path %>";
-      }
+      // Turboが死んでいても動くように location.href を優先
+      window.location.href = "<%= quiz_path %>";
     }, 1200);
   }
 </script>
