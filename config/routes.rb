@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post "quiz/record_answer", to: "words#record_answer"
   resource :session
   resources :passwords, param: :token
-  resources :registrations, only: [:new, :create]
+  resource :registrations, only: [:new, :create]
   resources :words
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
