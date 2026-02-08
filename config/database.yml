@@ -87,3 +87,6 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
+  # 以下の 2 行を念のため追記（重要！）
+  adapter: postgresql
+  pool: 5
