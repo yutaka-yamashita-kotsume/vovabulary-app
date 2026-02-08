@@ -37,35 +37,47 @@
 </div>
 
 <script>
-  // ① 音声読み上げ（より安定した書き方）
+  // 音声再生
   function speak(text) {
     if (!text) return;
-    window.speechSynthesis.cancel(); // 前の音声を止める
+    window.speechSynthesis.cancel();
     const uttr = new SpeechSynthesisUtterance(text);
     uttr.lang = 'en-US';
     uttr.rate = 0.9;
     window.speechSynthesis.speak(uttr);
   }
 
-  // ページ読み込み時に実行
-  document.addEventListener("turbo:load", function() {
+  // 1. ページ読み込み時に再生を試みる
+  document.addEventListener("turbo:load", () => {
     const questionText = document.getElementById("question-text");
     if (questionText) {
-      setTimeout(() => {
-        speak(questionText.innerText.trim());
-      }, 600);
+      setTimeout(() => speak(questionText.innerText.trim()), 500);
     }
   });
 
-  // ② 回答チェック関数（文法エラーを修正済）
+  // 2. 音声ブロック対策：画面のどこかをクリックしたら音が出るようにする
+  document.addEventListener("click", () => {
+    const questionText = document.getElementById("question-text");
+    // まだ音が鳴っていない場合だけ鳴らす
+    if (!window.speechSynthesis.speaking) {
+      speak(questionText?.innerText.trim());
+    }
+  }, { once: true }); // 最初の1回だけ実行
+
   async function checkAnswer(button, isCorrectStr) {
     const isCorrect = (isCorrectStr === "true");
     const buttons = document.querySelectorAll('.choice-btn');
-    
-    // 全ボタンを無効化
     buttons.forEach(btn => btn.disabled = true);
 
-    // サーバーに結果を送信
+    // 見た目の変化（これを先にやることで体感速度を上げます）
+    if (isCorrect) {
+      button.style.backgroundColor = "#22c55e";
+      button.style.color = "white";
+    } else {
+      button.style.backgroundColor = "#ef4444";
+      button.style.color = "white";
+    }
+
     try {
       const response = await fetch("/quiz/record_answer", {
         method: "POST",
@@ -79,26 +91,16 @@
           correct: isCorrect
         })
       });
-      console.log("Record status:", response.status);
-    } catch (e) {
-      console.error("Fetch error:", e);
-    } // ← ここで try をしっかり閉じました
 
-    // 見た目のフィードバック
-    if (isCorrect) {
-      button.style.backgroundColor = "#22c55e";
-      button.style.color = "white";
-      button.innerHTML += " ✨ Correct!";
-    } else {
-      button.style.backgroundColor = "#ef4444";
-      button.style.color = "white";
-      button.innerHTML += " ❌ Wrong...";
+      if (response.status === 404) {
+        console.error("エラー: ルーティングが設定されていません。routes.rbを確認してください。");
+      }
+    } catch (e) {
+      console.error("記録失敗:", e);
     }
     
-    // 1.2秒後に次の問題へ
     setTimeout(() => {
-      // Turboが死んでいても動くように location.href を優先
       window.location.href = "<%= quiz_path %>";
-    }, 1200);
+    }, 1000);
   }
 </script>
