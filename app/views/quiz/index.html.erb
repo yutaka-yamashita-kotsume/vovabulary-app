@@ -79,6 +79,7 @@
     }
 
     try {
+      // フォームデータ形式で送るのが最も確実ですが、JSONの場合は以下のようにします
       const response = await fetch("/quiz/record_answer", {
         method: "POST",
         headers: {
@@ -87,14 +88,13 @@
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({
-          id: "<%= @correct_word.id %>",
-          correct: isCorrect
+          id: "<%= @correct_word.id %>", // word_id ではなく id
+          correct: isCorrect             // true/false の真偽値
         })
       });
-
-      if (response.status === 404) {
-        console.error("エラー: ルーティングが設定されていません。routes.rbを確認してください。");
-      }
+      
+      if (!response.ok) throw new Error('Network response was not ok');
+      
     } catch (e) {
       console.error("記録失敗:", e);
     }
