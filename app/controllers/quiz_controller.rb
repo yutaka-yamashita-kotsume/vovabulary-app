@@ -23,8 +23,9 @@ class QuizController < ApplicationController
 
     # テスト終了時の処理
     if @current_index > @total_questions
-      # 【修正】「現在存在する単語」かつ「正解数3以上」のものだけを抽出
-      @mastered_words = Current.user.words.where("consecutive_correct_count >= ?", 3)
+      # 現在のユーザーの単語を件数で取得
+      @mastered_count = Current.user.words.where("consecutive_correct_count >= ?", 3).count
+      @learning_count = Current.user.words.where("consecutive_correct_count < ?", 3).count
       
       session[:quiz_current_index] = nil
       session[:quiz_tested_ids] = nil
