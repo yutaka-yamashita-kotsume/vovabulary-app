@@ -46,9 +46,17 @@ class WordsController < ApplicationController
 
   # PATCH/PUT /words/1 or /words/1.json
   def update
+    # 送信されたパラメータを取得
+    attrs = word_params.to_h
+
+    # 意味(meaning)が空で、単語(original_text)が入っている場合、AIに再翻訳させる
+    if attrs["original_text"].present? && attrs["meaning"].blank?
+      attrs["meaning"] = fetch_ai_meaning(attrs["original_text"])
+    end
+
     respond_to do |format|
-      if @word.update(word_params)
-        format.html { redirect_to @word, notice: "Word was successfully updated.", status: :see_other }
+      if @word.update(attrs) # 翻訳後のパラメータで更新
+        format.html { redirect_to words_path, notice: "単語を更新しました！" } # indexに戻る方が使いやすいかもしれません
         format.json { render :show, status: :ok, location: @word }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -120,7 +128,7 @@ rescue => e
 end
 
   def word_params
-      params.expect(word: [ :original_text, :meaning ])
+    params.require(:word).permit(:original_text, :meaning)
   end
 
 end
