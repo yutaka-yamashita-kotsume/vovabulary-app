@@ -11,7 +11,7 @@
     <%= yield :head %>
 
     <%# --- デザインを復活させるための重要な行 --- %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%# --------------------------------------- %>
