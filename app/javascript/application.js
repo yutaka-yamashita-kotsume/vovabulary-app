@@ -1,3 +1,6 @@
-// Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
-import "./controllers"
+import "controllers"
+
+// 念のためTurboをグローバルに公開（エラー回避用）
+import { Turbo } from "@hotwired/turbo-rails"
+window.Turbo = Turbo
