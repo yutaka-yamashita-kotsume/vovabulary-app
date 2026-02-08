@@ -12,9 +12,7 @@ class RegistrationsController < ApplicationController
       start_new_session_for @user
       redirect_to root_path, notice: "会員登録が完了しました！"
     else
-      # 理由を詳しく取得（メール重複など）
-      error_message = @user.errors.full_messages.join(" / ")
-      flash.now[:alert] = "登録できませんでした: #{error_message}"
+      flash.now[:alert] = "登録できませんでした: #{@user.errors.full_messages.to_sentence}"
       
       # URLが /registrations になったまま new 画面を表示する
       render :new, status: :unprocessable_entity
