@@ -1,31 +1,35 @@
 <div class="max-w-2xl mx-auto px-4 py-12 text-center">
   <% if @all_mastered %>
-    <%# 全単語学習済みの場合 %>
+    <%# --- 全単語マスター時の表示 (前回同様) --- %>
     <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-100 mb-8">
       <div class="text-6xl mb-6">🎉</div>
-      <h2 class="text-3xl font-extrabold text-slate-800 mb-4">素晴らしい！</h2>
-      <p class="text-slate-600 mb-8">全ての単語をマスターしましたね！<br>新しい単語を追加して、さらに語彙力を高めましょう。</p>
+      <h2 class="text-3xl font-extrabold text-slate-800 mb-4">完全制覇！</h2>
+      <p class="text-slate-600 mb-8">登録されている全ての単語をマスターしました！</p>
       <%= link_to "ホームに戻る", root_path, class: "inline-block bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all" %>
     </div>
 
   <% else %>
-    <%# 通常のテスト完了画面 %>
-    <div class="text-6xl mb-6">🙌</div>
+    <%# --- 通常のテスト完了画面 --- %>
+    <div class="text-6xl mb-6">🏁</div>
     <h2 class="text-3xl font-extrabold text-slate-800 mb-8">Test Complete!</h2>
 
-    <% if @mastered_words.any? %>
-      <div class="mb-10 text-left">
-        <p class="text-sm text-slate-400 font-bold mb-4 uppercase tracking-widest">マスターした単語（正解数3回以上）</p>
-        <div class="grid grid-cols-1 gap-3">
-          <% @mastered_words.each do |word| %>
-            <div class="flex items-center justify-between p-4 bg-green-50 rounded-2xl border border-green-100">
-              <span class="font-bold text-green-700"><%= word.original_text %></span>
-              <span class="text-xs font-bold text-green-600 bg-white px-2 py-1 rounded-full shadow-sm">MASTERED ✨</span>
-            </div>
-          <% end %>
+    <div class="grid grid-cols-2 gap-4 mb-10">
+      <%# マスターした単語数カード %>
+      <div class="bg-green-50 rounded-3xl p-6 border border-green-100 shadow-sm">
+        <p class="text-xs font-bold text-green-600 uppercase tracking-widest mb-2">Mastered</p>
+        <div class="text-4xl font-black text-green-700">
+          <%= @mastered_count %><span class="text-lg ml-1">words</span>
         </div>
       </div>
-    <% end %>
+
+      <%# 学習中の単語数カード %>
+      <div class="bg-orange-50 rounded-3xl p-6 border border-orange-100 shadow-sm">
+        <p class="text-xs font-bold text-orange-600 uppercase tracking-widest mb-2">Learning</p>
+        <div class="text-4xl font-black text-orange-700">
+          <%= @learning_count %><span class="text-lg ml-1">words</span>
+        </div>
+      </div>
+    </div>
 
     <div class="flex flex-col gap-4">
       <%= link_to "もう一度テストする", quiz_path, class: "bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all" %>

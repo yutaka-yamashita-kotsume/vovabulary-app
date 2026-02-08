@@ -1,31 +1,19 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "Yutaka Vovabulary App" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Yutaka Vovabulary App">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <%# --- フラッシュメッセージの表示エリア --- %>
+    <div class="fixed top-5 left-0 right-0 z-50 flex flex-col items-center gap-2 pointer-events-none">
+      <% flash.each do |type, message| %>
+        <% 
+          # タイプに合わせて色を定義
+          bg_color = type == "notice" ? "bg-green-500" : "bg-red-500"
+        %>
+        <div class="<%= bg_color %> text-white px-6 py-3 rounded-2xl shadow-2xl font-bold animate-bounce pointer-events-auto">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
+    <%# ------------------------------------ %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body class="bg-gray-50 text-gray-900 font-sans">
-  <main class="container mx-auto mt-10">
-    <%= yield %>
-  </main>
+    <main class="container mx-auto mt-10">
+      <%= yield %>
+    </main>
   </body>
-</html>
