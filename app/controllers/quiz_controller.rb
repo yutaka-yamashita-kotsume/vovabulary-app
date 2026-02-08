@@ -55,21 +55,22 @@ class QuizController < ApplicationController
   end
 
   def record_answer
-    # params[:id] が JS の JSON 内の id と一致します
-    word_id = params[:id] || params[:word_id]
     word = Current.user.words.find(params[:id])
 
     # 判定をより確実に (文字列 "true" か 真偽値 true なら正解)
     is_correct = params[:correct].to_s == "true"
 
-    if correct
+    if is_correct
       word.increment!(:consecutive_correct_count)
       session[:quiz_correct_count] = (session[:quiz_correct_count] || 0) + 1
     else
-      word.update(consecutive_correct_count: 0)
+      word.update!(consecutive_correct_count: 0)
     end
-    logger.info "Quiz Result: Word=#{word.original_text}, Correct=#{is_correct}, Count=#{session[:quiz_correct_count]}"
-    render json: { success: true }
+    # JSONではなく、成功ステータスのみを返す
+    head :ok 
+  rescue => e
+    logger.error "Quiz Error: #{e.message}"
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def reset

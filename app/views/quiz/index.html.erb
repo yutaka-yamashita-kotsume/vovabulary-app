@@ -69,7 +69,7 @@
     const buttons = document.querySelectorAll('.choice-btn');
     buttons.forEach(btn => btn.disabled = true);
 
-    // 見た目の変化（これを先にやることで体感速度を上げます）
+    // 1. 見た目の変化
     if (isCorrect) {
       button.style.backgroundColor = "#22c55e";
       button.style.color = "white";
@@ -78,29 +78,26 @@
       button.style.color = "white";
     }
 
+    // 2. サーバーへ記録（完了を待つ）
     try {
-      // フォームデータ形式で送るのが最も確実ですが、JSONの場合は以下のようにします
-      const response = await fetch("/quiz/record_answer", {
+      await fetch("/quiz/record_answer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({
-          id: "<%= @correct_word.id %>", // word_id ではなく id
-          correct: isCorrect             // true/false の真偽値
+          id: "<%= @correct_word.id %>",
+          correct: isCorrect
         })
       });
-      
-      if (!response.ok) throw new Error('Network response was not ok');
-      
     } catch (e) {
-      console.error("記録失敗:", e);
+      console.error("記録に失敗しました:", e);
     }
     
+    // 3. 1秒待ってから移動（Turboのキャッシュを避けるため、URLにタイムスタンプを付与）
     setTimeout(() => {
-      window.location.href = "<%= quiz_path %>";
-    }, 1000);
+      window.location.href = "<%= quiz_path %>?t=" + new Date().getTime();
+    }, 800);
   }
 </script>
