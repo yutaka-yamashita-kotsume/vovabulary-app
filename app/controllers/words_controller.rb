@@ -68,6 +68,24 @@ class WordsController < ApplicationController
     end
   end
 
+  skip_before_action :verify_authenticity_token, only: [:record_answer]
+
+  def record_answer
+    @word = Current.user.words.find(params[:word_id])
+    
+    # isCorrect が true または "true" の場合にカウントアップ
+    if params[:correct] == true || params[:correct] == "true"
+      @word.increment!(:consecutive_correct_count)
+    else
+      # 間違えたらリセット
+      @word.update(consecutive_correct_count: 0)
+    end
+
+    render json: { status: "ok", count: @word.consecutive_correct_count }
+  rescue => e
+    render json: { status: "error", message: e.message }, status: :unprocessable_entity
+  end
+
   private
   def set_word
     @word = Word.find(params[:id])
