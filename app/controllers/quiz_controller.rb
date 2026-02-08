@@ -51,6 +51,22 @@ class QuizController < ApplicationController
     session[:quiz_current_index] += 1
   end
 
+  def record_answer
+    word = Current.user.words.find(params[:id])
+    correct = params[:correct] == "true"
+
+    if correct
+      word.increment!(:consecutive_correct_count)
+      # --- 正解数をセッションに加算 ---
+      session[:quiz_correct_count] ||= 0
+      session[:quiz_correct_count] += 1
+    else
+      word.update(consecutive_correct_count: 0)
+    end
+
+    render json: { success: true }
+  end
+
   def reset
     session[:quiz_current_index] = nil
     session[:quiz_tested_ids] = nil
