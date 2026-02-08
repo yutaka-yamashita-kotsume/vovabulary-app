@@ -80,17 +80,18 @@
 
     // 2. サーバーへ記録（完了を待つ）
     try {
-      await fetch("/quiz/record_answer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-          id: "<%= @correct_word.id %>",
-          correct: isCorrect
-        })
-      });
+await fetch("/quiz/record_answer", {  // ← 先頭にスラッシュを付ける
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+    // skip_before_action を入れたので、X-CSRF-Token の行は消してもOKです
+  },
+  body: JSON.stringify({
+    id: "<%= @correct_word.id %>",
+    correct: isCorrect
+  })
+});
     } catch (e) {
       console.error("記録に失敗しました:", e);
     }

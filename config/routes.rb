@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get "quiz", to: "quiz#index"
   get "quiz/reset", to: "quiz#reset"
-  post "quiz/record_answer", to: "words#record_answer"
+  post "quiz/record_answer", to: "quiz#record_answer"
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: [:new, :create]

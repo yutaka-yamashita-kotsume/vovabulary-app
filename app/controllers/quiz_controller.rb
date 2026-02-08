@@ -1,4 +1,5 @@
 class QuizController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:record_answer]
   def index
     # 1. ユーザー自身の単語から、未卒業（3回未満）を抽出
     all_available = Current.user.words.where("consecutive_correct_count < ?", 3)
@@ -56,8 +57,6 @@ class QuizController < ApplicationController
 
   def record_answer
     word = Current.user.words.find(params[:id])
-
-    # 判定をより確実に (文字列 "true" か 真偽値 true なら正解)
     is_correct = params[:correct].to_s == "true"
 
     if is_correct
@@ -66,7 +65,7 @@ class QuizController < ApplicationController
     else
       word.update!(consecutive_correct_count: 0)
     end
-    # JSONではなく、成功ステータスのみを返す
+
     head :ok 
   rescue => e
     logger.error "Quiz Error: #{e.message}"
