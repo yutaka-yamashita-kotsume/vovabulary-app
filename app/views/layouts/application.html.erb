@@ -1,19 +1,36 @@
-<body class="bg-gray-50 text-gray-900 font-sans">
-    <%# --- フラッシュメッセージの表示エリア --- %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Yutaka Vocabulary App" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# --- デザインを復活させるための重要な行 --- %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%# --------------------------------------- %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+  </head>
+
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <%# フラッシュメッセージの表示エリア %>
     <div class="fixed top-5 left-0 right-0 z-50 flex flex-col items-center gap-2 pointer-events-none">
       <% flash.each do |type, message| %>
-        <% 
-          # タイプに合わせて色を定義
-          bg_color = type == "notice" ? "bg-green-500" : "bg-red-500"
-        %>
-        <div class="<%= bg_color %> text-white px-6 py-3 rounded-2xl shadow-2xl font-bold animate-bounce pointer-events-auto">
+        <div class="<%= type == 'notice' ? 'bg-green-500' : 'bg-red-500' %> text-white px-6 py-3 rounded-2xl shadow-2xl font-bold pointer-events-auto">
           <%= message %>
         </div>
       <% end %>
     </div>
-    <%# ------------------------------------ %>
 
-    <main class="container mx-auto mt-10">
+    <main class="container mx-auto mt-10 px-4">
       <%= yield %>
     </main>
   </body>
+</html>
