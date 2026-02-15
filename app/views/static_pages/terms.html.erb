@@ -1,4 +1,16 @@
-<div class="max-w-3xl mx-auto px-4 py-12 prose prose-slate">
+<div class="max-w-3xl mx-auto px-4 py-12">
+  <%# 1. 左上の戻るリンク %>
+  <div class="mb-8">
+    <%= link_to root_path, class: "text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-all text-sm font-medium" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      ホームへ戻る
+    <% end %>
+  </div>
+
+  <article class="prose prose-slate lg:prose-lg max-w-none">
+    <%# --- ここに既存の規約/ポリシーの内容 --- %>
   <h1 class="text-3xl font-bold mb-8">利用規約</h1>
   <p>この利用規約（以下，「本規約」といいます。）は，本アプリの提供するサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。</p>
 
@@ -14,4 +26,12 @@
 
   <h2 class="text-xl font-bold mt-6 mb-4">3. 免責事項</h2>
   <p>本サービスによって生じた何らかの損害について、当方は一切の責任を負わないものとします。</p>
+</div>
+</article>
+
+  <%# 2. 一番下の大きな戻るボタン %>
+  <div class="mt-16 pt-8 border-t border-slate-100 text-center">
+    <%= link_to "ホーム画面へ戻る", root_path, 
+        class: "inline-block px-8 py-3 bg-slate-800 text-white font-bold rounded-2xl hover:bg-slate-700 transition-all active:scale-95" %>
+  </div>
 </div>
