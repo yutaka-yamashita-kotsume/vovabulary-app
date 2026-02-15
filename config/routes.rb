@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get "terms", to: "static_pages#terms"
-  get "privacy", to: "static_pages#privacy"
+  get "terms", to: "static_pages#terms", as: :terms     # as: :terms を追加
+  get "privacy", to: "static_pages#privacy", as: :privacy # as: :privacy を追加
   get "static_pages/terms"
   get "static_pages/privacy"
   get "registrations/new"

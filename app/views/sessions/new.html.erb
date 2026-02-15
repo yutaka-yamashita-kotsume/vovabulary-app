@@ -32,9 +32,53 @@
     <div class="mt-8 text-center">
       <%= link_to "Forgot password?", new_password_path, class: "text-sm text-slate-400 hover:text-indigo-600 transition-all" %>
     </div>
-  </div>
-</div>
+
 <%# ログイン画面の下の方に追加 %>
 <div class="mt-4 text-center">
   <%= link_to "New user? Sign up here", new_registration_path, class: "text-sm text-slate-400 hover:text-indigo-600 transition-all" %>
 </div>
+
+<%# 4. AdSense審査対策用の説明セクション（ここも max-width-md の中に入れます） %>
+  <div class="mt-16 border-t border-slate-100 pt-12 text-left">
+    <h3 class="text-xl font-bold text-slate-800 mb-8 flex items-center">
+      <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-lg mr-3 text-xs uppercase tracking-wider">Features</span>
+      Vovabulary Appとは？
+    </h3>
+    
+    <div class="space-y-8">
+      <div class="flex gap-4">
+        <div class="text-2xl flex-shrink-0">🚀</div>
+        <div>
+          <h4 class="font-bold text-slate-700">スマートな英単語登録</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">DeepL APIを活用し、単語を入力するだけで瞬時に正確な意味を自動取得。辞書を引く手間を最小限に抑えます。</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="text-2xl flex-shrink-0">🧠</div>
+        <div>
+          <h4 class="font-bold text-slate-700">効率的な反復学習</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">連続正解数をカウントする独自のアルゴリズムを採用。定着していない単語を重点的に出題し、記憶の定着をサポートします。</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="text-2xl flex-shrink-0">🔊</div>
+        <div>
+          <h4 class="font-bold text-slate-700">音声読み上げ機能</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">ネイティブに近い音声で単語を読み上げ。視覚だけでなく聴覚も活用することで、より実践的な語彙力が身につきます。</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 p-6 bg-slate-50 rounded-3xl border border-slate-100">
+      <p class="text-[11px] text-slate-400 leading-relaxed">
+        ※本アプリは、ユーザーのプライバシーを尊重します。詳細は 
+        <%= link_to "プライバシーポリシー", privacy_path, class: "underline hover:text-indigo-600" %> 
+        および 
+        <%= link_to "利用規約", terms_path, class: "underline hover:text-indigo-600" %> 
+        をご確認ください。
+      </p>
+    </div>
+  </div>
+</div> <%# ここで全体の max-width-md を閉じます %>
