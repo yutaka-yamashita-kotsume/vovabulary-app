@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "terms", to: "static_pages#terms"
+  get "privacy", to: "static_pages#privacy"
+  get "static_pages/terms"
+  get "static_pages/privacy"
   get "registrations/new"
   get "registrations/create"
   root "words#home"
