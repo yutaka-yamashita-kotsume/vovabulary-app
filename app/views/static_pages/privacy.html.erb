@@ -1,3 +1,16 @@
+<div class="max-w-3xl mx-auto px-4 py-12">
+  <%# 1. 左上の戻るリンク %>
+  <div class="mb-8">
+    <%= link_to root_path, class: "text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-all text-sm font-medium" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      ホームへ戻る
+    <% end %>
+  </div>
+
+  <article class="prose prose-slate lg:prose-lg max-w-none">
+    <%# --- ここに既存の規約/ポリシーの内容 --- %>
 <div class="max-w-3xl mx-auto px-4 py-12 prose prose-slate">
   <h1 class="text-3xl font-bold mb-8">プライバシーポリシー</h1>
   
@@ -9,4 +22,12 @@
 
   <h2 class="text-xl font-bold mt-6 mb-4">3. アクセス解析ツールについて</h2>
   <p>本サービスでは、サイトの分析と改善のためにアクセス解析ツールを使用する可能性があります。データ収集のためにCookieを使用しますが、個人を特定するものではありません。</p>
+</div>
+</article>
+
+  <%# 2. 一番下の大きな戻るボタン %>
+  <div class="mt-16 pt-8 border-t border-slate-100 text-center">
+    <%= link_to "ホーム画面へ戻る", root_path, 
+        class: "inline-block px-8 py-3 bg-slate-800 text-white font-bold rounded-2xl hover:bg-slate-700 transition-all active:scale-95" %>
+  </div>
 </div>
