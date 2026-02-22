@@ -28,6 +28,10 @@
         </div>
       </div>
     <% end %>
+    <div class="mt-8 pt-8 border-t border-slate-100">
+  <%= button_to "登録なしで体験する（ゲストログイン）", guest_login_path, 
+      class: "w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl shadow-lg hover:bg-emerald-600 transition-all active:scale-95" %>
+</div>
 
     <div class="mt-8 text-center">
       <%= link_to "Forgot password?", new_password_path, class: "text-sm text-slate-400 hover:text-indigo-600 transition-all" %>
