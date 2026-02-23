@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get "quiz/reset", to: "quiz#reset"
   post "quiz/record_answer", to: "quiz#record_answer"
 
+  # ゲストログイン用のルートを追加
+  post "guest_login", to: "sessions#guest_login", as: :guest_login
+
   # 認証・登録
   resource :session
   resources :passwords, param: :token

@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  # guest_login を追加して、ログイン前でも実行可能にする
+  allow_unauthenticated_access only: [ :new, :create, :guest_login ]
 
   def new
   end
@@ -31,4 +32,9 @@ class SessionsController < ApplicationController
   start_new_session_for user
   redirect_to root_path, notice: "ゲストとしてログインしました。一部の機能が試せます。"
 end
+
+  def destroy
+    terminate_session
+    redirect_to new_session_path
+  end
 end
