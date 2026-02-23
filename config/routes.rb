@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: [:new, :create]
-  get "contact", to: "inquiries#new" # URLを /contact にする
+  get "contact", to: "inquiries#new", as: :contact # URLを /contact にする
 
   # 単語帳
   resources :words
