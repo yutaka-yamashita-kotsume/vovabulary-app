@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "inquiries/new"
+  get "inquiries/create"
   get "terms", to: "static_pages#terms", as: :terms     # as: :terms を追加
   get "privacy", to: "static_pages#privacy", as: :privacy # as: :privacy を追加
   
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: [:new, :create]
+  get "contact", to: "inquiries#new" # URLを /contact にする
 
   # 単語帳
   resources :words
