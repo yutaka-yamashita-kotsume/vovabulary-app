@@ -42,42 +42,63 @@
   <%= link_to "New user? Sign up here", new_registration_path, class: "text-sm text-slate-400 hover:text-indigo-600 transition-all" %>
 </div>
 
-<%# 4. AdSense審査対策用の説明セクション（ここも max-width-md の中に入れます） %>
-  <div class="mt-16 border-t border-slate-100 pt-12 text-left">
-    <h3 class="text-xl font-bold text-slate-800 mb-8 flex items-center">
-      <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-lg mr-3 text-xs uppercase tracking-wider">Features</span>
-      Vovabulary Appとは？
-    </h3>
+<%# --- ここから審査対策：幅を少し広げて(max-w-3xl)読み物としての価値を出す --- %>
+<div class="max-w-3xl mx-auto px-6 pb-24">
+  <div class="mt-16 border-t border-slate-100 pt-16">
+    <h2 class="text-2xl font-black text-slate-800 mb-12 text-center">効率的な英単語学習を、あなたに。</h2>
     
-    <div class="space-y-8">
-      <div class="flex gap-4">
-        <div class="text-2xl flex-shrink-0">🚀</div>
-        <div>
-          <h4 class="font-bold text-slate-700">スマートな英単語登録</h4>
-          <p class="text-sm text-slate-500 leading-relaxed">DeepL APIを活用し、単語を入力するだけで瞬時に正確な意味を自動取得。辞書を引く手間を最小限に抑えます。</p>
-        </div>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="space-y-4">
+        <div class="text-3xl">🚀</div>
+        <h4 class="font-bold text-lg text-slate-800">スマートな英単語登録</h4>
+        <p class="text-sm text-slate-500 leading-relaxed text-justify">
+          DeepL APIを活用し、単語を入力するだけで瞬時に正確な意味を自動取得。
+          辞書を引く手間を最小限に抑え、覚えることだけに集中できる環境を提供します。
+        </p>
       </div>
 
-      <div class="flex gap-4">
-        <div class="text-2xl flex-shrink-0">🧠</div>
-        <div>
-          <h4 class="font-bold text-slate-700">効率的な反復学習</h4>
-          <p class="text-sm text-slate-500 leading-relaxed">連続正解数をカウントする独自のアルゴリズムを採用。定着していない単語を重点的に出題し、記憶の定着をサポートします。</p>
-        </div>
+      <div class="space-y-4">
+        <div class="text-3xl">🧠</div>
+        <h4 class="font-bold text-lg text-slate-800">効率的な反復学習</h4>
+        <p class="text-sm text-slate-500 leading-relaxed text-justify">
+          連続正解数をカウントする独自のアルゴリズムを採用。
+          忘却曲線に基づき、定着していない単語を重点的に出題することで、記憶の定着を最大化します。
+        </p>
       </div>
 
-      <div class="flex gap-4">
-        <div class="text-2xl flex-shrink-0">🔊</div>
-        <div>
-          <h4 class="font-bold text-slate-700">音声読み上げ機能</h4>
-          <p class="text-sm text-slate-500 leading-relaxed">ネイティブに近い音声で単語を読み上げ。視覚だけでなく聴覚も活用することで、より実践的な語彙力が身につきます。</p>
-        </div>
+      <div class="space-y-4">
+        <div class="text-3xl">🔊</div>
+        <h4 class="font-bold text-lg text-slate-800">音声読み上げ機能</h4>
+        <p class="text-sm text-slate-500 leading-relaxed text-justify">
+          ブラウザの標準機能を活用したネイティブに近い音声読み上げ。
+          視覚だけでなく聴覚もフル活用することで、より実践的な語彙力が身につきます。
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="text-3xl">📊</div>
+        <h4 class="font-bold text-lg text-slate-800">学習の可視化</h4>
+        <p class="text-sm text-slate-500 leading-relaxed text-justify">
+          自分の成長が数字でわかる。覚えた単語数やクイズの正解率を確認することで、
+          毎日の学習モチベーションを維持し、継続をサポートします。
+        </p>
       </div>
     </div>
+
+    <%# 追加のコラム的テキスト：Googleはこういう長文を好みます %>
+    <div class="mt-20 p-8 bg-indigo-50 rounded-3xl">
+      <h3 class="font-bold text-indigo-900 mb-4">なぜ「Vocabulary App」が必要なのか？</h3>
+      <p class="text-sm text-indigo-800/80 leading-relaxed text-justify">
+        英単語の習得において最も重要なのは「接触回数」と「アウトプット」です。
+        当アプリは、日々の生活の中で出会った「生の英語」をその場ですぐに記録し、
+        自分だけの最強の単語帳を作るために生まれました。
+        1日たった5分のクイズが、1年後のあなたを大きく変えます。
+      </p>
+    </div>
     
-    <div class="mt-12 p-6 bg-slate-50 rounded-3xl border border-slate-100">
+    <div class="mt-12 text-center">
       <p class="text-[11px] text-slate-400 leading-relaxed">
-        ※本アプリは、ユーザーのプライバシーを尊重します。詳細は 
+        ※本アプリはユーザーのプライバシーを尊重します。詳細は 
         <%= link_to "プライバシーポリシー", privacy_path, class: "underline hover:text-indigo-600" %> 
         および 
         <%= link_to "利用規約", terms_path, class: "underline hover:text-indigo-600" %> 
@@ -85,4 +106,4 @@
       </p>
     </div>
   </div>
-</div> <%# ここで全体の max-width-md を閉じます %>
+</div>
